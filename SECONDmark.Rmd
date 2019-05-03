@@ -1,0 +1,74 @@
+---
+title: "上課講義"
+author: "H24066147"
+date: "2019年5月3日"
+output: html_document
+---
+**allright**
+
+__allright__
+
+##**做加粗
+
+1. ITEM 1
+* item 1  
+    + item A1  
+    + item A2  
+
+##標題
+    
+https://tw.yahoo.com/
+
+##超連結
+
+![](https://tr.logaster.com/blog/wp-content/uploads/2013/06/jpg.png)
+
+##把圖片連結貼上可顯示
+
+##```可以做標記
+
+* item2  
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+plot(pressure)
+```
+
+```{r}
+paste("Hello","world")
+```
+
+
+```{r cars}
+summary(cars)
+n <-dim(cars[1:25,])[1]
+n
+```
+the sample size is `r n`
+$$y=\beta_0+\beta_1x$$
+## $字號夾住FUNCTION
+
+## 用函數方式把OUTPUT做連結不需要COPY
+
+
+~~strikethrough~~
+
+##文字上加條線
+
+`plot()`
+
+##把FUNCTION標記
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
+Reference Style Links and Images
+
+##做表格
+
+
