@@ -1,0 +1,668 @@
+---
+title: "R language"
+author: "H24066147"
+output: 
+  html_document:  
+    toc : true
+    toc_depth : 2
+    toc_float :
+      collapsed : false
+      smooth_scroll : false
+---
+#CH1  **basic**  
+
+   + basic math  
+   
+    
+```5+49```
+
+```3*10```
+
+```2-5```
+
+```1/0```
+##inf 
+
+```0/0```
+##NaN
+
+```3^4```
+##81
+
+```31%%7```
+##3
+
+```31%/%7```
+##4
+
+```Inf - Inf```
+##NaN
+
+   + basic function
+
+```ls()```
+##see the variable
+
+```q()```
+##leave the programming
+
+
+```mean()```
+##cal mean
+
+```var()```
+##cal variance
+
+```object()```
+##see the variable in rstudio  
+
+```windows()```
+##open a window with nothing inside  
+
+```dev.off() pdf(path)```
+##save the windows graph you've draw
+
+
+```{r}
+x = c(0,10,20)
+x[0.4]#numeric(0)
+```
+
+```{r}
+colors = c("brown","yellow","blue")
+substr(colors , 2 ,3)
+```
+
+####use substr to pick letter from str  
+
+```{r}
+colors = c("brown","yellow","blue")
+paste(colors,c(colors,"red"),sep=":")
+```
+
+
+   + program example  
+  
+###EXAMPLE1  
+
+```{r,comment=NA}
+xx = 1:20
+interest_30 = 1.0025^30
+intRate = 0.01
+n = 10
+principal = 1500
+payment = principal * intRate / (1-(1+intRate)^(-n))
+payment
+rm("interest_30","xx") 
+n <-1:10
+options(width =10)
+1.25*(n*0.8) - n
+```
+
+###EXAMPLE2  
+
+```{r,comment=NA}
+n <-1:10
+1.25*(n*0.8) - n
+ 1+1/4
+b = c()
+for(n in 1:15){
+  a = 0.8*n*1.25-n
+  b = c(b,a)
+}
+b
+```
+
+####r calculate has some error term  
+  
+  
+###EXAMPLE3  
+
+```{r,comment=NA}
+1+0.000000000000000001
+```
+
+####r can only calculate till 16 number after Decimal point 
+
+###EXAMPLE4    
+
+
+```{r,comment=NA}
+c(1,31,1,20,20,20,5,3)%%2:3
+```
+####the number by order who divide by 2 and 3 and 2 and 3 ...... respectively 
+
+
+   + repeat  
+   
+```{r,comment=NA}
+
+rep(10,5)#REPEAT
+```
+
+```{r}
+rep(c(2,3,4),each=3)
+```
+
+```{r}
+rep(seq(11,30,3),c(rep(3,3),rep(4,4)))
+```
+####11 14 17...29 first three number will 
+
+####repeat 3 times last 4 number will repeat
+
+####4 times  
+
+#CH2 factor and matrix  
+    
+```{r}
+fac = c("A","B","A","B")
+fac = factor(fac)
+fac #show the levels
+```
+  
+```{r}
+fac2 = c("AAAAAAA" , "ABABABA" , "AAAAAAA" , "ABABABA",111)
+fac2 = factor(fac2)
+as.integer(fac2)   #trans into numbers
+```
+  
+```{r}
+
+fac4 = c("AAAAAAA" , "ABABABA" , "AAAAAAA" , "ABABABA")
+fac4= factor(fac4)
+as.integer(fac4)
+levels(fac4)
+levels(fac4)[as.integer(fac4)]
+levels(fac4)[c(1,2,1,2,1,1,1,1,2,2,2)] #use number to create complicated factor
+```
+
+   + matrix array  
+
+```{r}
+m = matrix(20:27,nrow= 2,ncol = 4)
+m
+m[2,]
+m[,3]#find col or row
+2*m[c(1,2),c(2,4)]#linear combimation
+```
+  
+```{r}
+array(1:24, c(4,3,2))
+out = array(1:120, c(5,4,3,2))
+out[1,1,c(1,2),c(1,2)] #find value of specific place 
+```
+
+   + data frame  
+```{r}
+color = c("red","red","red1","blue")
+number= c(1,3,5,7)
+logic = c(T,T,F,F)
+out.fr = data.frame(colors= color,numbers=number,logics=logic)
+out.fr
+out.fr= data.frame(color,number,logics = logic)
+2*out.fr  #numeric will double 
+#word will become NA
+
+out.fr[,2] #call by name
+out.fr[,"number"] #call by name
+
+#class function shows what type of data in the variable
+class(color) #character
+class(logic) #logical
+class(m)  #matrix
+class(out.fr$color) #factor
+```
+  
+  
+#CH3  TIME
+    + system time  
+    
+```{r}
+format(Sys.time(), "%a %b %d %X %Y %Z")
+format(Sys.time(), "%H %M %OS3")
+
+lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
+lct
+x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
+z <- strptime(x, "%d%b%Y")
+x
+z
+
+dates <- c("02/27/92", "02/27/92", "01/14/92", "02/28/92", "02/01/92")
+times <- c("23:03:20", "22:29:56", "01:03:30", "18:21:03", "16:56:26")
+x <- paste(dates, times)
+x
+strptime(x, "%m/%d/%y %H:%M:%S")
+
+z <- strptime("20/2/06 11:16:16.683", "%d/%m/%y %H:%M:%OS")
+z # prints without fractional seconds
+op <- options(digits.secs = 3)  #prints with fractional seconds
+z
+```  
+  
+```{r}
+strptime("Tue, 23 Mar 2010 14:36:38 -0400",  "%a, %d %b %Y %H:%M:%S %z")
+         
+format(seq.Date(as.Date('1978-01-01'), by = 'day', len = 7), "%a")
+#in day order
+format(seq.Date(as.Date('2000-01-01'), by = 'month', len = 12), "%b")#in month order
+seq(as.Date("2000/1/1"), as.Date("2003/1/1") ,by="week")
+```
+
+#CH4  basic graph
+    + histogram  
+```{r}
+x= c(1:100,201:300)
+hist.x=hist(x)
+hist(x)
+x= seq(10, 100 , 5)
+y=x^3-2*x
+plot(x,y) #points
+plot(x,y ,type="l") #line
+curve(cos,from=1,to=3*pi)
+curve(x^3-2*x,from=1,to=2)
+rm(x)
+#curve(y^3-2*y,from=1,to=2) #function must use x to be variable
+curve(tan,from=1,to=150)
+```
+    + saving image  
+```{r}
+setwd("C:/Users/Administrator/Desktop/R")
+dump("hist.x","hist.x.out")
+ls()
+rm(hist.x)
+ls()
+
+source("hist.x.out")
+ls()
+
+dump(objects(),"all.r")
+sink("try2.txt")
+y = 1:10
+y
+x = sin(y)
+x
+sink()  
+
+save.image("new.RData") 
+save.image("new.www")
+rm(list=ls())
+load("new.RData")
+ls()
+```
+    + function draw  
+
+```{r}
+
+x1 =(1:300)/100
+x2 = (301:600)/100
+y1=x1*3+2
+y2=x2*2-(0.5*x2^2)
+plot(c(0,6),c(min(y1,y2),max(y1,y2)),xlab="x",ylab="y",type="n")
+curve(3*x+2,0,3,add=T)
+curve(2*x-0.5*x^2,3,6,add=T)#draw by part
+```
+    + create random sample  
+```{r}
+x =rnorm(1000)
+hist(x)
+hist(x,breaks=5)#break into 6 parts
+```
+    + qq plot  
+```{r}
+x=rnorm(1000)
+a=rnorm(1000)
+qqplot(x , a , main="a and x are the same")
+
+x=rnorm(1000)
+d=exp(rnorm(1000))
+qqplot(x,d, main= "D is skewed to the right")
+
+```
+
+```indexfinger=read.table("C:/Users/Administrator/Desktop/R/indexfinger.txt",header =T)```
+####find files on computer  
+
+```
+with(indexfinger[c(3,7),],points(length, width , pch=16))
+with(indexfinger[c(1,4),],points(length, width , pch=10))
+plot(width~length , pch=as.character(sex),data=indexfinger)
+col.v= c("red","blue", "red","red","blue","red","blue")
+abline(lm( width~length,data = indexfinger ,subset=sex=="M"),lty=1 , col="blue")
+abline(lm( width ~length,data = indexfinger ,subset=sex=="F"),lty=2 , col="red")
+```
+####some options to control the graph  
+    + create from empty  
+```{r}
+par(mar=c(5,6,10,7)+0.1)
+plot(c(1,9),c(0,50),type="n",xlab="",ylab="")
+text(6,40,"Plot region")
+points(6,20)
+text(6,20,"(6,20)",adj=c(.5,2))#ADJ move right.5 move down 2
+text(6,20,"(6,20)")
+mtext(paste("Margin",1:4),side=1:4 ,line=3)#line is distance between graph and word
+mtext(paste("Love",0:4),side = 1,line=0:4,at=3, cex=0.6)
+#paste text beside each title ,cex control text's size(big or small)
+```
+
+#CH5 loop  
+    + for  
+###example
+```{r}
+Fibonacci = numeric(120)
+Fibonacci[1] <- Fibonacci[2] <-1
+for (i in 3:120) Fibonacci[i] <- Fibonacci[i-2]+ Fibonacci[i-1] 
+Fibonacci
+```
+
+###example2  
+```{r}
+i = 0.006
+for (j in 1:1000) {
+  i = (1-(1+i)^(-20))/19
+} 
+i
+```
+
+###example3  
+```{r}
+Fibonacci1 = numeric(21)
+Fibonacci1[1]=1
+for (i in 1:20) Fibonacci1[i+1]= (Fibonacci[i+1] / Fibonacci[i]) 
+Fibonacci1  #converage to 1.618034
+```
+###if and eilf with function
+```{r}
+x= 3
+if (x>2) y=x^2 else y=cos(x)
+y;x
+
+
+corplot = function (x , y ,plotit) {
+  if (plotit == TRUE) plot(x,y)
+  cor (x,y)
+}
+
+corplot(c(1,3,5,7),c(2,2,10,2),F)
+```
+    + generate Prime number
+```{r}
+Eratosthenes = function(n) {
+  if (n>=2) {
+    sieve = seq(2,n)
+    primes = c()
+    for (i in seq(2,n)) {
+      if (any (sieve == i)){
+        primes = c(primes , i ) #PRIME is empty
+        sieve = c(sieve[(sieve%%i)!=0], i)  
+      }
+    }
+    return(primes)#send out the output
+  }else{
+    stop("Input value of n should be at least 2.")#stop
+  }
+}
+n = 10 
+sieve = seq(2,n)
+i = 2
+sieve ==i
+any(sieve == i)
+
+Eratosthenes(100)
+
+```
+
+```{r}
+fib1 = 1
+fib2 = 1
+Fibonacci = c(fib1 , fib2)
+while (fib2 <300){
+  Fibonacci = c(Fibonacci , fib2)
+  oldfib = fib2
+  fib2 = fib2+fib1
+  fib1 = oldfib
+  print(fib2)
+}
+```
+    + repeat  
+```{r}
+x = 1
+tolerance = 0.000001
+repeat{     #hard to fall into infinity loop
+  f=x^3+2*x^2-7
+  if (abs(f)< tolerance) break #can stop
+  f.prime = 3*x^2+4*x
+  x = x-f /f.prime
+}
+x
+```
+###same variable will not effect each 
+###other under different levels
+```{r}
+g = function(){
+  x = 2
+}
+f = function() {
+  x = 1
+  g()
+  return(x)
+}
+f()
+```
+    + merge sort  
+```{r}
+#cut data into two parts ,combine after sorted
+#front smallest compare with back smallest
+#use loop RECURSION to recall function itself
+mergesort = function(x){
+  len= length(x)
+  if(len<2) result = x 
+  else{
+    y = x[1:(len/2)]
+    z = x[(len/2+1):len]
+    y = mergesort(y)
+    z = mergesort(z)
+    result = c()
+    while(min(length(y),length(z))>0){
+      if (y[1]<z[1]){
+        result = c(result, y[1])
+        y  = y[-1]
+      }else{
+        result = c(result,z[1])
+        z = z[-1]
+        
+      }
+    }
+    if(length(y)>0){
+      result= c(result,y)
+    }else{
+      result= c(result,z)
+    }
+  return(result)  
+  }
+}
+```
+    
+    
+#CH6 more graph  
+    + exp dist
+```{r}
+set.seed(1)
+T = -log(1-runif(10000))/1
+EXP = rexp(10000)
+par(mfrow = c(1,2))
+hist(T,breaks = 50)
+hist(EXP , breaks = 50)
+```
+    
+```{r}
+set.seed(1)
+k = 0.45403
+g = function(x)0.5*exp(-(x^1.5))/k
+x = rexp(100000)
+w = g(x)/dexp(x)
+curve(g(x)/dexp(x))
+mean0 = weighted.mean(x ,w)#x is target w is weight
+mean0
+weighted.mean((x-mean0)^2,w)
+```
+#CH7 matrix calculate  
+    + basic calculate
+```{r}
+cbind(seq(1,3),seq(2,4),seq(3,5))
+1/cbind(seq(1,3),seq(2,4),seq(3,5))#for every element
+x = matrix(c(1,2,3,1,4,9),ncol = 2)#bycol
+x
+dim(x)#size
+x[,2]
+x[,2,drop = FALSE]#matrix
+class(x[,2])
+class(x[,2,drop = FALSE])
+rownames(x)
+rownames(x) = c("obs1","obs2","obs3")#col give names
+x
+colnames(x)
+colnames(x) = c("x","x2")
+#x$x2#matrix can't use
+x[,"x"]
+x = as.data.frame(x)#DATAFRAME form
+x$x
+#det(x)  # matrix form needed
+#diag(x)
+y = cbind(seq(1,3),seq(2,4),seq(3,5))
+y
+diag(y)
+diag(diag(y))#use twice become matrix
+diag(1:6)
+lower.tri(x)#lower triangler
+x[upper.tri(x , diag=TRUE)] = 0#change upper into 0
+x
+x = matrix(1:6,nrow=3)
+y = matrix(c(3,4,5,7,7,7),ncol=2)
+x
+y
+x*y#element times element for each position
+#x%*%y  #2*3 2*3 not allow
+t(x)%*%y#TRANSPOSE
+```
+    + solve  
+```{r}
+set.seed(1)
+z = matrix(rnorm(9),nrow = 3)
+solve(z)
+#ax=b
+b = c(1,2,3)
+A = z
+x = solve(A,b)#find Aminus
+x
+```
+    + AVD QR
+```{r}
+h3 = matrix(c(1,1/2,1/3,1/2,1/3,1/4,1/3,1/4,1/5),nrow=3)
+h3
+svd(h3)
+
+qr(h3) #qr分解 AX =B QRX =B RX=T(Q)B
+qr.Q(qr(h3))#Q的值
+qr.R(qr(h3))#R的值
+
+kappa(h3)#MAX eigenvalue divide MIN eigenvalue
+```
+
+```{r}
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
+#col one always 3 col two 43212345
+dimnames(x)[[1]] <- letters[1:8]#dim1 name
+x
+apply(x, 2, mean, trim = .2)
+#trim  data sorted erase 20% left and right tail(trim=.2)
+
+names(dimnames(x)) <- c("row", "col")#dim
+dim(x)
+x3 <- array(x, dim = c(dim(x),3),dimnames = c(dimnames(x), list(C = paste0("cop.",1:3))))
+x3
+#8X2X3array
+apply(x,2, identity)
+identical(x,  apply( x,  2,  identity))
+identical(x3, apply(x3, 2:3, identity))
+
+```
+
+#CH8 golden function
+```{r}
+f = function(x){
+  abs(x-3.5)+abs(x-2)+abs(x-1)
+}
+curve(f, from = 0 , to = 5)
+golden = function(f, a , b , tol=0.0000001){
+  ratio = 2/(sqrt(5)+1)
+  x1 = b -ratio*(b-a)
+  x2 = a+ratio*(b-a)
+  f1 = f(x1)
+  f2 = f(x2)
+  while(abs(b-a)>tol){
+    if (f2>f1){
+      b=  x2
+      x2 = x1
+      f2 = f1
+      x1 = b - ratio*(b-a)
+      f1 = f(x1)
+    }else{
+      a = x1
+      x1 = x2
+      f1=f2
+      x2 = a+ratio*(b-a)
+      f2 = f(x2)
+      
+    }
+  }
+  return((a+b)/2)
+}
+golden(f,1,5)
+
+```
+#CH9 optim nlm LPsolve quadprog
+```{r}
+f = function(x,y)((x-y)^2+(x-2)^2+(y-3)^4)/10
+x = seq(0,5,len=20)
+y = seq(0,5,len=20)
+z = outer(x,y,f)
+contour(x,y,z)
+f2 = function(x)((x[1]-x[2])^2+(x[1]-2)^2+(x[2]-3)^4)/10
+optim(c(1,1),f2)#convergence = 0 is correct 
+
+```
+
+```
+g = function(x)(abs(x-3.5)+abs(x-2)+abs(x-1))
+optimize(g,c(0,5))
+g1 = function(x)(abs(x-3.2)+abs(x-2)+abs(x-1)+abs(x-3.5))
+optimize(g1,c(0,5))
+#linear programming
+install.packages("lpSolve")
+library(lpSolve)
+eg.lp = lp(objective.in=c(5,8),
+           const.mat=matrix(c(1,1,1,2),nrow=2)
+           ,const.rhs=c(2,3),const.dir=c(">=",">="))
+eg.lp
+eg.lp$solution
+
+```
+
+```
+set.seed(1)
+x = seq(1,5,length=20)
+y = rnorm(20)+x
+install.packages("quadprog")
+library(quadprog)
+x = cbind(rep(1,20),x) 
+xx= t(x)%*%x
+xy = t(x)%*%y
+a = matrix(c(0,1),ncol=1)
+b = 1
+out = solve.QP(Dmat=xx , dvec=xy,Amat=a,bvec=b)
+out
+```
+
+
